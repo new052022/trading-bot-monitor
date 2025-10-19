@@ -29,7 +29,7 @@ pipeline {
             steps {
                  git branch: 'develop',
                      credentialsId: 'c1574c72-7536-44f0-b6a5-d0727c235306',
-                     url: 'https://github.com/new052022trading-bot-monitor.git'
+                     url: 'https://github.com/new052022/trading-bot-monitor.git'
              }
         }
 
