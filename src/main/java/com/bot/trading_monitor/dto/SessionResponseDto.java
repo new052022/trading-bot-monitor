@@ -6,28 +6,27 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TradingPositionDtoResponseDto {
+public class SessionResponseDto {
 
-    private String symbol;
+    private String sessionStatus;
 
-    private LocalDateTime time;
+    private Double totalBalance;
 
-    private String exchange;
+    private Boolean isQuantActive;
 
-    private String side;
+    private Boolean isMarketActive;
 
-    private BigDecimal realizedPnl;
+    private Boolean isStrategyActive;
 
-    private long orderId;
+    private Boolean isOrderActive;
 
-    private BigDecimal commission;
+    private Boolean isStreamingActive;
+
+    private Boolean isUserActive;
 
 }

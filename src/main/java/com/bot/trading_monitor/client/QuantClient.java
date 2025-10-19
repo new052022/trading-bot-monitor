@@ -1,19 +1,21 @@
 package com.bot.trading_monitor.client;
 
-import com.bot.trading_monitor.dto.TradingPositionDtoRequestDto;
 import com.bot.trading_monitor.dto.TradingPositionDtoResponseDto;
-import com.bot.trading_monitor.dto.TradingSesionRequestDto;
-import com.bot.trading_monitor.dto.TradingSesionResponseDto;
+import com.bot.trading_monitor.dto.TradingSessionResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
 @FeignClient(name = "quant", url = "${quant.url}")
 public interface QuantClient {
 
-    List<TradingPositionDtoResponseDto> getTradingPositions(TradingPositionDtoRequestDto request);
+    @GetMapping("/user-trades/{userId}")
+    List<TradingPositionDtoResponseDto> getTradingPositions(@PathVariable Long userId);
 
-    TradingSesionResponseDto getTradingSession(TradingSesionRequestDto request);
+    @GetMapping("/strategy-session/{userId}")
+    TradingSessionResponseDto getTradingSession(@PathVariable Long userId);
 
 }
 

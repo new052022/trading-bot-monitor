@@ -23,15 +23,15 @@ spring:
   datasource:
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASS}
-    url: jdbc:postgresql://${DB_HOST}/trading-monitor
+    url: jdbc:postgresql://${DB_HOST}/${DB_NAME:trading_monitor}
 
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
 
-secret-key: ${SECRET_NUMBER}
-
-algorithm: ${ALGORITHM}
+jwt:
+  secret: ${JWT_SECRET:your-secret-key-change-this-in-production-must-be-at-least-256-bits}
+  expiration: ${JWT_EXPIRATION:86400000} # 24 hours in milliseconds
 
 quant:
   url: ${QUANT_URL}
