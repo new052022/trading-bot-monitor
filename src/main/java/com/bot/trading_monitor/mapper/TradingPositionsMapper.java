@@ -42,6 +42,7 @@ public class TradingPositionsMapper {
 
     private long countUniqueTrades(List<TradingPositionDtoResponseDto> positions) {
         return positions.stream()
+                .filter(position -> position.getRealizedPnl() != null && position.getRealizedPnl().compareTo(BigDecimal.ZERO) != 0)
                 .map(TradingPositionDtoResponseDto::getOrderId)
                 .distinct()
                 .count();
