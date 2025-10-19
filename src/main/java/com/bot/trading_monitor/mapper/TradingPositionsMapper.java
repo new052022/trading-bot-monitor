@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 @Component
 public class TradingPositionsMapper {
@@ -18,17 +17,17 @@ public class TradingPositionsMapper {
         LocalDateTime sevenDaysAgo = now.minusDays(7);
 
         // Calculate total statistics
-        long totalTrades = tradingPositions.size();
+        long totalTrades = countUniqueTrades(tradingPositions);
         double totalRealizedPnL = calculateRealizedPnL(tradingPositions);
 
         // Calculate 30 days statistics
         List<TradingPositionDtoResponseDto> positions30Days = filterPositionsByDate(tradingPositions, thirtyDaysAgo);
-        long tradesNumber30Days = positions30Days.size();
+        long tradesNumber30Days = countUniqueTrades(positions30Days);
         double realizedPnL30Days = calculateRealizedPnL(positions30Days);
 
         // Calculate 7 days statistics
         List<TradingPositionDtoResponseDto> positions7Days = filterPositionsByDate(tradingPositions, sevenDaysAgo);
-        long tradesNumber7Days = positions7Days.size();
+        long tradesNumber7Days = countUniqueTrades(positions7Days);
         double realizedPnL7Days = calculateRealizedPnL(positions7Days);
 
         return TradingPositionsResponseDto.builder()
@@ -39,6 +38,13 @@ public class TradingPositionsMapper {
                 .tradesNumber7Days(tradesNumber7Days)
                 .realizedPnL7Days(realizedPnL7Days)
                 .build();
+    }
+
+    private long countUniqueTrades(List<TradingPositionDtoResponseDto> positions) {
+        return positions.stream()
+                .map(TradingPositionDtoResponseDto::getOrderId)
+                .distinct()
+                .count();
     }
 
     private List<TradingPositionDtoResponseDto> filterPositionsByDate(
