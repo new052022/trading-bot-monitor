@@ -85,6 +85,9 @@ public class TradingPositionsMapper {
                 .values()
                 .stream()
                 .map(this::mergePositions)
+                .filter(position -> position != null && 
+                        position.getRealizedPnl() != null && 
+                        position.getRealizedPnl().compareTo(BigDecimal.ZERO) != 0)
                 .toList();
     }
 

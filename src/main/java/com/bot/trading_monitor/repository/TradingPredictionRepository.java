@@ -10,5 +10,6 @@ import java.util.Optional;
 public interface TradingPredictionRepository extends JpaRepository<TradingPrediction, Long> {
 
     Optional<TradingPrediction> findTopByUserIdOrderByFetchedAtDesc(Long userId);
-}
 
+    void deleteByUserId(Long userId);
+}

@@ -58,6 +58,10 @@ public class TradingPredictionSchedulerService {
 
             String predictionJson = objectMapper.writeValueAsString(prediction);
 
+            // Delete old predictions for this user before saving new one
+            tradingPredictionRepository.deleteByUserId(userId);
+            log.debug("Deleted old predictions for user {}", userId);
+
             TradingPrediction entity = TradingPrediction.builder()
                     .userId(userId)
                     .predictionData(predictionJson)
