@@ -16,10 +16,9 @@ public interface QuantClient {
     List<TradingPositionDtoResponseDto> getTradingPositions(@PathVariable Long userId);
 
     @GetMapping("/user-trades/{userId}/predictions")
-    List<TradingPredictionResponseDto> getPredictionsOnly(@PathVariable Long userId);
+    TradingPredictionResponseDto getPredictionsOnly(@PathVariable Long userId);
 
     @GetMapping("/strategy-session/{userId}")
     TradingSessionResponseDto getTradingSession(@PathVariable Long userId);
 
 }
-

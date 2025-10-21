@@ -3,11 +3,11 @@ package com.bot.trading_monitor.service.impl;
 import com.bot.trading_monitor.client.QuantClient;
 import com.bot.trading_monitor.dto.prediction.TradingPredictionResponseDto;
 import com.bot.trading_monitor.entity.TradingPrediction;
+import com.bot.trading_monitor.entity.User;
 import com.bot.trading_monitor.repository.TradingPredictionRepository;
 import com.bot.trading_monitor.repository.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -26,13 +27,13 @@ public class TradingPredictionSchedulerService {
     private final UserRepository userRepository;
     private final ObjectMapper objectMapper;
 
-    @Scheduled(fixedRate = 600000) // 10 minutes in milliseconds
+    @Scheduled(fixedRate = 300000) // 5 minutes in milliseconds
     public void fetchAndSavePredictions() {
         log.info("Starting scheduled prediction fetch");
 
         List<Long> userIds = userRepository.findAll().stream()
-                .map(user -> user.getExternalId())
-                .filter(externalId -> externalId != null)
+                .map(User::getExternalId)
+                .filter(Objects::nonNull)
                 .toList();
 
         for (Long userId : userIds) {
@@ -48,15 +49,12 @@ public class TradingPredictionSchedulerService {
 
     private void fetchAndSavePredictionForUser(Long userId) {
         try {
-            List<TradingPredictionResponseDto> predictions = quantClient.getPredictionsOnly(userId);
+            TradingPredictionResponseDto prediction = quantClient.getPredictionsOnly(userId);
 
-            if (predictions == null || predictions.isEmpty()) {
+            if (prediction == null) {
                 log.warn("No predictions received for user {}", userId);
                 return;
             }
-
-            // Take the first prediction (most recent)
-            TradingPredictionResponseDto prediction = predictions.get(0);
 
             String predictionJson = objectMapper.writeValueAsString(prediction);
 
@@ -77,4 +75,3 @@ public class TradingPredictionSchedulerService {
         }
     }
 }
-
