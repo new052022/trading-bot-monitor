@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/changelog/19102025_create_users_table.sql
+  - include:
+      file: db/changelog/21102025_create_trading_predictions_table.sql

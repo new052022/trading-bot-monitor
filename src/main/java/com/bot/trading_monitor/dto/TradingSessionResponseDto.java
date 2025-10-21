@@ -31,4 +31,6 @@ public class TradingSessionResponseDto {
 
     private Boolean isUserActive;
 
+    private Integer  daysInTrading;
+
 }

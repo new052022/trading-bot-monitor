@@ -29,4 +29,8 @@ public class SessionResponseDto {
 
     private Boolean isUserActive;
 
+    private Integer  daysInTrading;
+
+    private Boolean isPause;
+
 }

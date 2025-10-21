@@ -17,6 +17,8 @@ public class SessionMapper {
                 .isOrderActive(response.getIsOrderActive())
                 .isStreamingActive(response.getIsStreamingActive())
                 .isUserActive(response.getIsUserActive())
+                .daysInTrading(response.getDaysInTrading())
+                .isPause(response.getIsPause())
                 .build();
     }
 

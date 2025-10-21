@@ -37,6 +37,7 @@ public class TradingPositionsMapper {
                 .realizedPnL30Days(realizedPnL30Days)
                 .tradesNumber7Days(tradesNumber7Days)
                 .realizedPnL7Days(realizedPnL7Days)
+                .tradingPositions(tradingPositions)
                 .build();
     }
 
