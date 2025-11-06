@@ -21,7 +21,7 @@ public class TradingPredictionSchedulerService {
     private final TradingPredictionPersistenceService persistenceService;
     private final UserRepository userRepository;
 
-    @Scheduled(fixedRate = 300000) // 5 minutes in milliseconds
+    @Scheduled(fixedRate = 900000) // 5 minutes in milliseconds
     public void fetchAndSavePredictions() {
         log.info("Starting scheduled prediction fetch");
 
